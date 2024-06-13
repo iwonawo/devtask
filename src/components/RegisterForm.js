@@ -10,6 +10,7 @@ import {
 import Input from './Input.js'
 
 function RegisterForm() {
+  const [isLoading, setIsLoading] = useState(false)
   const [enteredValues, setEnteredValues] = useState({
     email: '',
     password: '',
@@ -79,8 +80,12 @@ function RegisterForm() {
     // Clear any previous error messages
     setErrorMessage('')
 
-    // Redirect to the Login Page
-    navigate('/', { state: { showLogin: true } })
+    // Simulate server request delay before redirection to the Login page
+    setIsLoading(true)
+    setTimeout(() => {
+      setIsLoading(false)
+      navigate('/', { state: { showLogin: true } })
+    }, 3000)
   }
 
   function handleInputChange(identifier, value) {
@@ -104,48 +109,56 @@ function RegisterForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Register</h2>
+      {isLoading ? (
+        <span>You're account has been created! You can Log In now...</span>
+      ) : (
+        <>
+          <h2>Register for the account</h2>
 
-      {errorMessage && <p>{errorMessage}</p>}
+          {errorMessage && <p>{errorMessage}</p>}
 
-      <div>
-        <Input
-          label="Email"
-          id="email"
-          error={emailIsInvalid && 'Please enter a valid email address.'}
-          type="email"
-          name="email"
-          onBlur={() => handleInputBlur('email')}
-          onChange={event => handleInputChange('email', event.target.value)}
-          value={enteredValues.email}
-        />
-        <Input
-          label="Password"
-          id="password"
-          error={passwordIsInvalid && 'Password is too short.'}
-          type="password"
-          name="password"
-          onBlur={() => handleInputBlur('password')}
-          onChange={event => handleInputChange('password', event.target.value)}
-          value={enteredValues.password}
-        />
-        <Input
-          label="Confirm Password"
-          id="confirm-password"
-          error={confirmPasswordIsInvalid && 'Passwords do not match.'}
-          type="password"
-          name="confirm-password"
-          onBlur={() => handleInputBlur('confirmPassword')}
-          onChange={event =>
-            handleInputChange('confirmPassword', event.target.value)
-          }
-          value={enteredValues.confirmPassword}
-        />
-      </div>
+          <div>
+            <Input
+              label="Email"
+              id="email"
+              error={emailIsInvalid && 'Please enter a valid email address.'}
+              type="email"
+              name="email"
+              onBlur={() => handleInputBlur('email')}
+              onChange={event => handleInputChange('email', event.target.value)}
+              value={enteredValues.email}
+            />
+            <Input
+              label="Password"
+              id="password"
+              error={passwordIsInvalid && 'Password is too short.'}
+              type="password"
+              name="password"
+              onBlur={() => handleInputBlur('password')}
+              onChange={event =>
+                handleInputChange('password', event.target.value)
+              }
+              value={enteredValues.password}
+            />
+            <Input
+              label="Confirm Password"
+              id="confirm-password"
+              error={confirmPasswordIsInvalid && 'Passwords do not match.'}
+              type="password"
+              name="confirm-password"
+              onBlur={() => handleInputBlur('confirmPassword')}
+              onChange={event =>
+                handleInputChange('confirmPassword', event.target.value)
+              }
+              value={enteredValues.confirmPassword}
+            />
+          </div>
 
-      <p className="form-actions">
-        <button className="button">Register</button>
-      </p>
+          <p className="form-actions">
+            <button className="button">Register</button>
+          </p>
+        </>
+      )}
     </form>
   )
 }

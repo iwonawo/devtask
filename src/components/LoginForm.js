@@ -4,7 +4,7 @@ import { isEmail, isNotEmpty, hasMinLength } from '../util/validation.js'
 
 import Input from './Input.js'
 
-function LoginForm() {
+function LoginForm({ onLogin }) {
   const [isLoading, setIsLoading] = useState(false)
   const [enteredValues, setEnteredValues] = useState({
     email: '',
@@ -61,8 +61,6 @@ function LoginForm() {
       return
     }
 
-    console.log('Form submitted with values:', enteredValues)
-
     // Reset form inputs
     setEnteredValues({
       email: '',
@@ -79,6 +77,7 @@ function LoginForm() {
     setIsLoading(true)
     setTimeout(() => {
       setIsLoading(false)
+      onLogin()
       navigate('/otp')
     }, 3000)
   }
@@ -104,39 +103,42 @@ function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Login</h2>
+      {isLoading ? (
+        <span>Sending OTP number...</span>
+      ) : (
+        <>
+          <h2>Log in to the account</h2>
+          {errorMessage && <p>{errorMessage}</p>}
+          <div>
+            <Input
+              label="Email"
+              id="login-email"
+              error={emailIsInvalid && 'Please enter a valid email address.'}
+              type="email"
+              name="email"
+              onBlur={() => handleInputBlur('email')}
+              onChange={event => handleInputChange('email', event.target.value)}
+              value={enteredValues.email}
+            />
+            <Input
+              label="Password"
+              id="login-password"
+              error={passwordIsInvalid && 'Password is too short.'}
+              type="password"
+              name="password"
+              onBlur={() => handleInputBlur('password')}
+              onChange={event =>
+                handleInputChange('password', event.target.value)
+              }
+              value={enteredValues.password}
+            />
+          </div>
 
-      {errorMessage && <p>{errorMessage}</p>}
-      <div>
-        <Input
-          label="Email"
-          id="login-email"
-          error={emailIsInvalid && 'Please enter a valid email address.'}
-          type="email"
-          name="email"
-          onBlur={() => handleInputBlur('email')}
-          onChange={event => handleInputChange('email', event.target.value)}
-          value={enteredValues.email}
-        />
-        <Input
-          label="Password"
-          id="login-password"
-          error={passwordIsInvalid && 'Password is too short.'}
-          type="password"
-          name="password"
-          onBlur={() => handleInputBlur('password')}
-          onChange={event => handleInputChange('password', event.target.value)}
-          value={enteredValues.password}
-        />
-      </div>
-
-      <p className="form-actions">
-        {isLoading ? (
-          <span>Sending OTP number...</span>
-        ) : (
-          <button className="button">Login</button>
-        )}
-      </p>
+          <p className="form-actions">
+            <button className="button">Log In</button>
+          </p>
+        </>
+      )}
     </form>
   )
 }
