@@ -1,21 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { AuthContext } from '../util/AuthContext'
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
 
 const HomePage = () => {
   const location = useLocation()
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const { isLoggedIn, logout } = useContext(AuthContext)
   const [isRegistered, setIsRegistered] = useState(
     location.state?.showLogin || true
   )
 
   useEffect(() => {
-    const loggedInStatus = localStorage.getItem('isLoggedIn')
-
-    if (loggedInStatus === 'true') {
-      setIsLoggedIn(true)
-    }
     if (location.state?.showLogin) {
       setIsRegistered(true)
     }
@@ -25,14 +21,8 @@ const HomePage = () => {
     setIsRegistered(!isRegistered)
   }
 
-  const handleLogin = () => {
-    setIsLoggedIn(true)
-    localStorage.setItem('isLoggedIn', 'true')
-  }
-
   const onLogout = () => {
-    setIsLoggedIn(false)
-    localStorage.setItem('isLoggedIn', null)
+    logout()
   }
 
   return (
@@ -49,7 +39,7 @@ const HomePage = () => {
             </p>
           ) : (
             <>
-              <LoginForm onLogin={handleLogin} />
+              <LoginForm />
               <p className="text-center my-4">
                 Don't have an accout?{' '}
                 <Link className="link-color" onClick={onSwitchForms}>

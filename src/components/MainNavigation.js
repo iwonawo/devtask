@@ -1,6 +1,10 @@
+import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
+import { AuthContext } from '../util/AuthContext'
 
 function MainNavigation() {
+  const { isLoggedIn } = useContext(AuthContext)
+
   return (
     <header className="p-4 md:p-8">
       <nav>
@@ -10,11 +14,13 @@ function MainNavigation() {
               Home
             </NavLink>
           </li>
-          <li>
-            <NavLink className="link-nav" to="currency-mapping">
-              Balance
-            </NavLink>
-          </li>
+          {isLoggedIn && (
+            <li>
+              <NavLink className="link-nav" to="currency-mapping">
+                Balance
+              </NavLink>
+            </li>
+          )}
         </ul>
       </nav>
     </header>

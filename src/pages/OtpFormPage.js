@@ -1,14 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import { isNotEmpty, hasOtpLength } from '../util/validation'
+import { AuthContext } from '../util/AuthContext'
 import Input from '../components/Input'
 
 const OtpFormPage = () => {
   const [enteredValue, setEnteredValue] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+  const { isOtpRequested, login } = useContext(AuthContext)
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (!isOtpRequested) {
+      navigate('/')
+    }
+  }, [isOtpRequested, navigate])
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -20,9 +28,8 @@ const OtpFormPage = () => {
 
     // Reset form inputs
     setEnteredValue('')
-    // Clear any previous error messages
     setErrorMessage('')
-    // Redirect to the Currency Mapping page
+    login()
     navigate('/currency-mapping')
   }
 
