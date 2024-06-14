@@ -5,6 +5,7 @@ function ErrorPage() {
   const error = useRouteError()
 
   let title = 'An error occurred!'
+  let subtitle = ''
   let message = 'Something went wrong!'
 
   if (error.status === 500) {
@@ -12,7 +13,8 @@ function ErrorPage() {
   }
 
   if (error.status === 404) {
-    title = 'Not found!'
+    title = '404'
+    subtitle = 'Not found!'
     message = 'Could not find resource or page.'
   }
 
@@ -22,7 +24,8 @@ function ErrorPage() {
         <MainNavigation />
         <div>
           <h1>{title}</h1>
-          <p>{message}</p>
+          <h2>{subtitle}</h2>
+          <p className="text-center">{message}</p>
         </div>
       </div>
     </>

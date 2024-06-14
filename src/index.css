@@ -100,7 +100,7 @@ form {
 
 .wrapper {
   max-width: 1200px;
-  margin: 1rem auto;
+  margin: 0 auto;
   padding: 1rem;
 }
 
@@ -122,21 +122,9 @@ button:hover {
 
 .error {
 	color: var(--color-error);
+  font-weight: 400;
 }
 
 .success-text {
   color: var(--color-success);
 }
-
-
-/* .currency-grid, .not-found-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 16px;
-}
-
-.currency-item, .not-found-item {
-  border: 1px solid #ccc;
-  padding: 16px;
-  text-align: center;
-} */

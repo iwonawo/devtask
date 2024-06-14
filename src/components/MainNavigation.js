@@ -2,9 +2,9 @@ import { NavLink } from 'react-router-dom'
 
 function MainNavigation() {
   return (
-    <header className="p-8">
+    <header className="p-4 md:p-8">
       <nav>
-        <ul className="list flex gap-4 justify-end">
+        <ul className="list flex gap-4 justify-center md:justify-end">
           <li>
             <NavLink className="link-nav" to="/">
               Home

@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+import useWindowSize from '../components/useWindowSize'
+import classes from './CurrencyMapping.module.css'
 
 const currencyAbbreviations = {
   1: 'AUD',
@@ -34,6 +36,7 @@ const CurrencyMappingPage = () => {
   const [error, setError] = useState(null)
   const [notFoundData, setNotFoundData] = useState([])
   const [notFoundError, setNotFoundError] = useState(null)
+  const size = useWindowSize()
 
   const fetchCurrencies = async () => {
     setIsLoading(true)
@@ -59,7 +62,7 @@ const CurrencyMappingPage = () => {
         'https://653fb0ea9e8bd3be29e10cd4.mockapi.io/api/v1/not-found'
       )
       if (!response.ok) {
-        throw new Error('Failed to fetch not-found data.')
+        throw new Error('Failed to fetch data.')
       }
       const data = await response.json()
       setNotFoundData(data)
@@ -73,44 +76,299 @@ const CurrencyMappingPage = () => {
     fetchNotFoundData()
   }, [])
 
-  return (
-    <div>
-      <h1>Balances</h1>
-      {error ? (
-        <p>{error}</p>
-      ) : !isLoading ? (
-        <div className="currency-grid">
-          {currencies.map(currency => (
-            <div className="currency-item" key={currency.currencyId}>
-              <div>
-                {currencyAbbreviations[currency.currencyId] ||
-                  currency.currencyId}
-              </div>
-              <div>{currency.amount}</div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+  // const renderDesktopLayout = () => (
+  //   <div>
+  //     <div className={classes.tableHeader}>
+  //       <div className={classes.tableCell}>Name</div>
+  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+  //         Balance
+  //       </div>
+  //       <div className={classes.tableCell}>Name</div>
+  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+  //         Balance
+  //       </div>
+  //       <div className={classes.tableCell}>Name</div>
+  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+  //         Balance
+  //       </div>
+  //     </div>
+  //     {currencies.map((currency, index) => (
+  //       <div className={classes.tableRow} key={currency.currencyId}>
+  //         <div className={`${classes.tableCell} ${classes.tableCellCurrency}`}>
+  //           {currencyAbbreviations[currency.currencyId] || currency.currencyId}
+  //         </div>
+  //         <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+  //           {currency.amount}
+  //         </div>
+  //         {currencies[index + 1] && (
+  //           <>
+  //             <div
+  //               className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+  //             >
+  //               {currencyAbbreviations[currencies[index + 1].currencyId] ||
+  //                 currencies[index + 1].currencyId}
+  //             </div>
+  //             <div
+  //               className={`${classes.tableCell} ${classes.tableCellAmount}`}
+  //             >
+  //               {currencies[index + 1].amount}
+  //             </div>
+  //           </>
+  //         )}
+  //         {currencies[index + 2] && (
+  //           <>
+  //             <div
+  //               className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+  //             >
+  //               {currencyAbbreviations[currencies[index + 2].currencyId] ||
+  //                 currencies[index + 2].currencyId}
+  //             </div>
+  //             <div
+  //               className={`${classes.tableCell} ${classes.tableCellAmount}`}
+  //             >
+  //               {currencies[index + 2].amount}
+  //             </div>
+  //           </>
+  //         )}
+  //       </div>
+  //     ))}
+  //   </div>
+  // )
 
-      <h1>Not Found Data</h1>
-      {notFoundError ? (
-        <p>{notFoundError}</p>
-      ) : (
-        <div className="not-found-grid">
-          {notFoundData.length > 0 ? (
-            notFoundData.map((item, index) => (
-              <div className="not-found-item" key={index}>
-                {item.name}
-              </div>
-            ))
-          ) : (
-            <div>No data available</div>
-          )}
+  // const renderTabletLayout = () => (
+  //   <div>
+  //     <div className={classes.tableHeader}>
+  //       <div className={classes.tableCell}>Name</div>
+  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+  //         Balance
+  //       </div>
+  //       <div className={classes.tableCell}>Name</div>
+  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+  //         Balance
+  //       </div>
+  //     </div>
+  //     {currencies.map((currency, index) => (
+  //       <div className={classes.tableRow} key={currency.currencyId}>
+  //         <div className={`${classes.tableCell} ${classes.tableCellCurrency}`}>
+  //           {currencyAbbreviations[currency.currencyId] || currency.currencyId}
+  //         </div>
+  //         <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+  //           {currency.amount}
+  //         </div>
+  //         {currencies[index + 1] && (
+  //           <>
+  //             <div
+  //               className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+  //             >
+  //               {currencyAbbreviations[currencies[index + 1].currencyId] ||
+  //                 currencies[index + 1].currencyId}
+  //             </div>
+  //             <div
+  //               className={`${classes.tableCell} ${classes.tableCellAmount}`}
+  //             >
+  //               {currencies[index + 1].amount}
+  //             </div>
+  //           </>
+  //         )}
+  //       </div>
+  //     ))}
+  //   </div>
+  // )
+
+  // const renderMobileLayout = () => (
+  //   <div>
+  //     <div className={classes.tableHeader}>
+  //       <div className={classes.tableCell}>Name</div>
+  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+  //         Balance
+  //       </div>
+  //     </div>
+  //     {currencies.map(currency => (
+  //       <div className={classes.tableRow} key={currency.currencyId}>
+  //         <div className={`${classes.tableCell} ${classes.tableCellCurrency}`}>
+  //           {currencyAbbreviations[currency.currencyId] || currency.currencyId}
+  //         </div>
+  //         <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+  //           {currency.amount}
+  //         </div>
+  //       </div>
+  //     ))}
+  //   </div>
+  // )
+
+  const renderDesktopLayout = () => (
+    <div>
+      <div className={classes.tableHeader}>
+        <div className={classes.tableCell}>Name</div>
+        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+          Balance
         </div>
-      )}
+        <div className={classes.tableCell}>Name</div>
+        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+          Balance
+        </div>
+        <div className={classes.tableCell}>Name</div>
+        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+          Balance
+        </div>
+      </div>
+      {currencies.map((currency, index) => {
+        const nextIndex = index + 1
+        const secondNextIndex = index + 2
+        return (
+          <div className={classes.tableRow} key={currency.currencyId}>
+            <div
+              className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+            >
+              {currencyAbbreviations[currency.currencyId] ||
+                currency.currencyId}
+            </div>
+            <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+              {currency.amount}
+            </div>
+            {currencies[nextIndex] && (
+              <>
+                <div
+                  className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+                >
+                  {currencyAbbreviations[currencies[nextIndex].currencyId] ||
+                    currencies[nextIndex].currencyId}
+                </div>
+                <div
+                  className={`${classes.tableCell} ${classes.tableCellAmount}`}
+                >
+                  {currencies[nextIndex].amount}
+                </div>
+              </>
+            )}
+            {currencies[secondNextIndex] && (
+              <>
+                <div
+                  className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+                >
+                  {currencyAbbreviations[
+                    currencies[secondNextIndex].currencyId
+                  ] || currencies[secondNextIndex].currencyId}
+                </div>
+                <div
+                  className={`${classes.tableCell} ${classes.tableCellAmount}`}
+                >
+                  {currencies[secondNextIndex].amount}
+                </div>
+              </>
+            )}
+          </div>
+        )
+      })}
     </div>
+  )
+
+  const renderTabletLayout = () => (
+    <div>
+      <div className={classes.tableHeader}>
+        <div className={classes.tableCell}>Name</div>
+        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+          Balance
+        </div>
+        <div className={classes.tableCell}>Name</div>
+        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+          Balance
+        </div>
+      </div>
+      {currencies.map((currency, index) => {
+        const nextIndex = index + 1
+        return (
+          <div className={classes.tableRow} key={currency.currencyId}>
+            <div
+              className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+            >
+              {currencyAbbreviations[currency.currencyId] ||
+                currency.currencyId}
+            </div>
+            <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+              {currency.amount}
+            </div>
+            {currencies[nextIndex] && (
+              <>
+                <div
+                  className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+                >
+                  {currencyAbbreviations[currencies[nextIndex].currencyId] ||
+                    currencies[nextIndex].currencyId}
+                </div>
+                <div
+                  className={`${classes.tableCell} ${classes.tableCellAmount}`}
+                >
+                  {currencies[nextIndex].amount}
+                </div>
+              </>
+            )}
+          </div>
+        )
+      })}
+    </div>
+  )
+
+  const renderMobileLayout = () => (
+    <div>
+      <div className={classes.tableHeader}>
+        <div className={classes.tableCell}>Name</div>
+        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+          Balance
+        </div>
+      </div>
+      {currencies.map(currency => (
+        <div className={classes.tableRow} key={currency.currencyId}>
+          <div className={`${classes.tableCell} ${classes.tableCellCurrency}`}>
+            {currencyAbbreviations[currency.currencyId] || currency.currencyId}
+          </div>
+          <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+            {currency.amount}
+          </div>
+        </div>
+      ))}
+    </div>
+  )
+
+  const renderContent = () => {
+    if (size.width > 1023) {
+      return renderDesktopLayout()
+    } else if (size.width > 599) {
+      return renderTabletLayout()
+    } else {
+      return renderMobileLayout()
+    }
+  }
+
+  return (
+    <>
+      <div className={classes.tableContainer}>
+        <h2 className="text-left mb-4">Balances</h2>
+        {error ? (
+          <p>{error}</p>
+        ) : isLoading ? (
+          <p className="text-center">Loading...</p>
+        ) : (
+          renderContent()
+        )}
+      </div>
+      <div className={classes.tableContainer}>
+        <h2 className="text-left mb-4">Not Found Data</h2>
+        {notFoundError ? (
+          <p>{notFoundError}</p>
+        ) : (
+          <div>
+            {notFoundData.length > 0 ? (
+              notFoundData.map((item, index) => (
+                <div key={index}>{item.name}</div>
+              ))
+            ) : (
+              <p>No data available.</p>
+            )}
+          </div>
+        )}
+      </div>
+    </>
   )
 }
 
