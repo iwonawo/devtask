@@ -91,7 +91,8 @@ function LoginForm({ onLogin }) {
       ...prevState,
       [identifier]: false
     }))
-    setErrorMessage('') // Clear error message when user starts typing
+    // Clear error message when user starts typing
+    setErrorMessage('')
   }
 
   function handleInputBlur(identifier) {

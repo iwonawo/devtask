@@ -1,8 +1,8 @@
-.input_container {
+.inputContainer {
 	margin: .75rem auto;
 }
 
-.input_error {
+.inputError {
 	color: var(--color-error);
 	font-size: .8rem;
 }

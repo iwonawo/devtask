@@ -19,16 +19,14 @@ function ErrorPage() {
   }
 
   return (
-    <>
-      <div className="wrapper">
-        <MainNavigation />
-        <div>
-          <h1>{title}</h1>
-          <h2>{subtitle}</h2>
-          <p className="text-center">{message}</p>
-        </div>
+    <div className="wrapper">
+      <MainNavigation />
+      <div>
+        <h1>{title}</h1>
+        <h2>{subtitle}</h2>
+        <p className="text-center">{message}</p>
       </div>
-    </>
+    </div>
   )
 }
 

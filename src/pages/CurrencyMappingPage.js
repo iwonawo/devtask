@@ -1,34 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import useWindowSize from '../components/useWindowSize'
+import useWindowSize from '../hooks/useWindowSize'
 import classes from './CurrencyMapping.module.css'
-
-const currencyAbbreviations = {
-  1: 'AUD',
-  2: 'RSD',
-  3: 'CHF',
-  4: 'JPY',
-  5: 'EUR',
-  6: 'USD',
-  7: 'DZD',
-  8: 'ARS',
-  9: 'AZN',
-  10: 'BRL',
-  11: 'CNY',
-  12: 'GEL',
-  13: 'INR',
-  14: 'LVL',
-  15: 'OMR',
-  16: 'CUP',
-  17: 'ZAR',
-  18: 'ZWD',
-  19: 'QAR',
-  20: 'PLN',
-  21: 'GBP',
-  22: 'CAD',
-  23: 'SEK',
-  24: 'PHP',
-  25: 'IDR'
-}
+import currencyAbbreviations from '../util/currencyAbbreviations'
 
 const CurrencyMappingPage = () => {
   const [isLoading, setIsLoading] = useState(false)
@@ -76,247 +49,131 @@ const CurrencyMappingPage = () => {
     fetchNotFoundData()
   }, [])
 
-  // const renderDesktopLayout = () => (
-  //   <div>
-  //     <div className={classes.tableHeader}>
-  //       <div className={classes.tableCell}>Name</div>
-  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-  //         Balance
-  //       </div>
-  //       <div className={classes.tableCell}>Name</div>
-  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-  //         Balance
-  //       </div>
-  //       <div className={classes.tableCell}>Name</div>
-  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-  //         Balance
-  //       </div>
-  //     </div>
-  //     {currencies.map((currency, index) => (
-  //       <div className={classes.tableRow} key={currency.currencyId}>
-  //         <div className={`${classes.tableCell} ${classes.tableCellCurrency}`}>
-  //           {currencyAbbreviations[currency.currencyId] || currency.currencyId}
-  //         </div>
-  //         <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-  //           {currency.amount}
-  //         </div>
-  //         {currencies[index + 1] && (
-  //           <>
-  //             <div
-  //               className={`${classes.tableCell} ${classes.tableCellCurrency}`}
-  //             >
-  //               {currencyAbbreviations[currencies[index + 1].currencyId] ||
-  //                 currencies[index + 1].currencyId}
-  //             </div>
-  //             <div
-  //               className={`${classes.tableCell} ${classes.tableCellAmount}`}
-  //             >
-  //               {currencies[index + 1].amount}
-  //             </div>
-  //           </>
-  //         )}
-  //         {currencies[index + 2] && (
-  //           <>
-  //             <div
-  //               className={`${classes.tableCell} ${classes.tableCellCurrency}`}
-  //             >
-  //               {currencyAbbreviations[currencies[index + 2].currencyId] ||
-  //                 currencies[index + 2].currencyId}
-  //             </div>
-  //             <div
-  //               className={`${classes.tableCell} ${classes.tableCellAmount}`}
-  //             >
-  //               {currencies[index + 2].amount}
-  //             </div>
-  //           </>
-  //         )}
-  //       </div>
-  //     ))}
-  //   </div>
-  // )
-
-  // const renderTabletLayout = () => (
-  //   <div>
-  //     <div className={classes.tableHeader}>
-  //       <div className={classes.tableCell}>Name</div>
-  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-  //         Balance
-  //       </div>
-  //       <div className={classes.tableCell}>Name</div>
-  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-  //         Balance
-  //       </div>
-  //     </div>
-  //     {currencies.map((currency, index) => (
-  //       <div className={classes.tableRow} key={currency.currencyId}>
-  //         <div className={`${classes.tableCell} ${classes.tableCellCurrency}`}>
-  //           {currencyAbbreviations[currency.currencyId] || currency.currencyId}
-  //         </div>
-  //         <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-  //           {currency.amount}
-  //         </div>
-  //         {currencies[index + 1] && (
-  //           <>
-  //             <div
-  //               className={`${classes.tableCell} ${classes.tableCellCurrency}`}
-  //             >
-  //               {currencyAbbreviations[currencies[index + 1].currencyId] ||
-  //                 currencies[index + 1].currencyId}
-  //             </div>
-  //             <div
-  //               className={`${classes.tableCell} ${classes.tableCellAmount}`}
-  //             >
-  //               {currencies[index + 1].amount}
-  //             </div>
-  //           </>
-  //         )}
-  //       </div>
-  //     ))}
-  //   </div>
-  // )
-
-  // const renderMobileLayout = () => (
-  //   <div>
-  //     <div className={classes.tableHeader}>
-  //       <div className={classes.tableCell}>Name</div>
-  //       <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-  //         Balance
-  //       </div>
-  //     </div>
-  //     {currencies.map(currency => (
-  //       <div className={classes.tableRow} key={currency.currencyId}>
-  //         <div className={`${classes.tableCell} ${classes.tableCellCurrency}`}>
-  //           {currencyAbbreviations[currency.currencyId] || currency.currencyId}
-  //         </div>
-  //         <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-  //           {currency.amount}
-  //         </div>
-  //       </div>
-  //     ))}
-  //   </div>
-  // )
-
-  const renderDesktopLayout = () => (
-    <div>
-      <div className={classes.tableHeader}>
-        <div className={classes.tableCell}>Name</div>
-        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-          Balance
-        </div>
-        <div className={classes.tableCell}>Name</div>
-        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-          Balance
-        </div>
-        <div className={classes.tableCell}>Name</div>
-        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-          Balance
-        </div>
-      </div>
-      {currencies.map((currency, index) => {
-        const nextIndex = index + 1
-        const secondNextIndex = index + 2
-        return (
-          <div className={classes.tableRow} key={currency.currencyId}>
-            <div
-              className={`${classes.tableCell} ${classes.tableCellCurrency}`}
-            >
-              {currencyAbbreviations[currency.currencyId] ||
-                currency.currencyId}
-            </div>
-            <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-              {currency.amount}
-            </div>
-            {currencies[nextIndex] && (
-              <>
-                <div
-                  className={`${classes.tableCell} ${classes.tableCellCurrency}`}
-                >
-                  {currencyAbbreviations[currencies[nextIndex].currencyId] ||
-                    currencies[nextIndex].currencyId}
-                </div>
-                <div
-                  className={`${classes.tableCell} ${classes.tableCellAmount}`}
-                >
-                  {currencies[nextIndex].amount}
-                </div>
-              </>
-            )}
-            {currencies[secondNextIndex] && (
-              <>
-                <div
-                  className={`${classes.tableCell} ${classes.tableCellCurrency}`}
-                >
-                  {currencyAbbreviations[
-                    currencies[secondNextIndex].currencyId
-                  ] || currencies[secondNextIndex].currencyId}
-                </div>
-                <div
-                  className={`${classes.tableCell} ${classes.tableCellAmount}`}
-                >
-                  {currencies[secondNextIndex].amount}
-                </div>
-              </>
-            )}
+  const renderTableHeader = columns => {
+    const headers = []
+    for (let i = 0; i < columns; i++) {
+      headers.push(
+        <React.Fragment key={i}>
+          <div className={classes.tableCell}>Name</div>
+          <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
+            Balance
           </div>
-        )
-      })}
-    </div>
-  )
+        </React.Fragment>
+      )
+    }
+    return <div className={classes.tableHeader}>{headers}</div>
+  }
 
-  const renderTabletLayout = () => (
-    <div>
-      <div className={classes.tableHeader}>
-        <div className={classes.tableCell}>Name</div>
-        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-          Balance
+  const renderDesktopLayout = () => {
+    const rows = []
+    for (let i = 0; i < currencies.length; i += 3) {
+      rows.push(
+        <div className={classes.tableRow} key={i}>
+          {currencies[i] && (
+            <>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+              >
+                {currencyAbbreviations[currencies[i].currencyId] ||
+                  currencies[i].currencyId}
+              </div>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellAmount}`}
+              >
+                {currencies[i].amount}
+              </div>
+            </>
+          )}
+          {currencies[i + 1] && (
+            <>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+              >
+                {currencyAbbreviations[currencies[i + 1].currencyId] ||
+                  currencies[i + 1].currencyId}
+              </div>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellAmount}`}
+              >
+                {currencies[i + 1].amount}
+              </div>
+            </>
+          )}
+          {currencies[i + 2] && (
+            <>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+              >
+                {currencyAbbreviations[currencies[i + 2].currencyId] ||
+                  currencies[i + 2].currencyId}
+              </div>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellAmount}`}
+              >
+                {currencies[i + 2].amount}
+              </div>
+            </>
+          )}
         </div>
-        <div className={classes.tableCell}>Name</div>
-        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-          Balance
-        </div>
+      )
+    }
+    return (
+      <div>
+        {renderTableHeader(3)}
+        {rows}
       </div>
-      {currencies.map((currency, index) => {
-        const nextIndex = index + 1
-        return (
-          <div className={classes.tableRow} key={currency.currencyId}>
-            <div
-              className={`${classes.tableCell} ${classes.tableCellCurrency}`}
-            >
-              {currencyAbbreviations[currency.currencyId] ||
-                currency.currencyId}
-            </div>
-            <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-              {currency.amount}
-            </div>
-            {currencies[nextIndex] && (
-              <>
-                <div
-                  className={`${classes.tableCell} ${classes.tableCellCurrency}`}
-                >
-                  {currencyAbbreviations[currencies[nextIndex].currencyId] ||
-                    currencies[nextIndex].currencyId}
-                </div>
-                <div
-                  className={`${classes.tableCell} ${classes.tableCellAmount}`}
-                >
-                  {currencies[nextIndex].amount}
-                </div>
-              </>
-            )}
-          </div>
-        )
-      })}
-    </div>
-  )
+    )
+  }
+
+  const renderTabletLayout = () => {
+    const rows = []
+    for (let i = 0; i < currencies.length; i += 2) {
+      rows.push(
+        <div className={classes.tableRow} key={i}>
+          {currencies[i] && (
+            <>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+              >
+                {currencyAbbreviations[currencies[i].currencyId] ||
+                  currencies[i].currencyId}
+              </div>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellAmount}`}
+              >
+                {currencies[i].amount}
+              </div>
+            </>
+          )}
+          {currencies[i + 1] && (
+            <>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellCurrency}`}
+              >
+                {currencyAbbreviations[currencies[i + 1].currencyId] ||
+                  currencies[i + 1].currencyId}
+              </div>
+              <div
+                className={`${classes.tableCell} ${classes.tableCellAmount}`}
+              >
+                {currencies[i + 1].amount}
+              </div>
+            </>
+          )}
+        </div>
+      )
+    }
+    return (
+      <div>
+        {renderTableHeader(2)}
+        {rows}
+      </div>
+    )
+  }
 
   const renderMobileLayout = () => (
     <div>
-      <div className={classes.tableHeader}>
-        <div className={classes.tableCell}>Name</div>
-        <div className={`${classes.tableCell} ${classes.tableCellAmount}`}>
-          Balance
-        </div>
-      </div>
+      {renderTableHeader(1)}
       {currencies.map(currency => (
         <div className={classes.tableRow} key={currency.currencyId}>
           <div className={`${classes.tableCell} ${classes.tableCellCurrency}`}>
@@ -347,7 +204,7 @@ const CurrencyMappingPage = () => {
         {error ? (
           <p>{error}</p>
         ) : isLoading ? (
-          <p className="text-center">Loading...</p>
+          <span className="loader"></span>
         ) : (
           renderContent()
         )}

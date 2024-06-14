@@ -8,7 +8,6 @@ const OtpFormPage = () => {
   const [enteredValue, setEnteredValue] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  // redirection to the currency mapping page
   const navigate = useNavigate()
 
   function handleSubmit(event) {
@@ -23,7 +22,6 @@ const OtpFormPage = () => {
     setEnteredValue('')
     // Clear any previous error messages
     setErrorMessage('')
-
     // Redirect to the Currency Mapping page
     navigate('/currency-mapping')
   }
@@ -48,7 +46,6 @@ const OtpFormPage = () => {
             value={enteredValue}
           />
         </div>
-
         <p className="form-actions">
           <button className="button">Submit</button>
         </p>
