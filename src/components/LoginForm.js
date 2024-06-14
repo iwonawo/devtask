@@ -1,24 +1,23 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { isEmail, isNotEmpty, hasMinLength } from '../util/validation.js'
+import { AuthContext } from '../util/AuthContext.js'
 
 import Input from './Input.js'
 
-function LoginForm({ onLogin }) {
+function LoginForm() {
+  const { requestOtp } = useContext(AuthContext)
   const [isLoading, setIsLoading] = useState(false)
   const [enteredValues, setEnteredValues] = useState({
     email: '',
     password: ''
   })
-
   const [didEdit, setDidEdit] = useState({
     email: false,
     password: false
   })
-
   const [errorMessage, setErrorMessage] = useState('')
 
-  // redirection to the otp form after submittion with valid form inputs
   const navigate = useNavigate()
 
   // validation
@@ -77,7 +76,8 @@ function LoginForm({ onLogin }) {
     setIsLoading(true)
     setTimeout(() => {
       setIsLoading(false)
-      onLogin()
+      // Set OTP requested state
+      requestOtp()
       navigate('/otp')
     }, 2500)
   }
