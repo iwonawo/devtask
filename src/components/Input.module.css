@@ -1,0 +1,23 @@
+.input_container {
+	margin: .75rem auto;
+}
+
+.input_error {
+	color: var(--color-error);
+	font-size: .8rem;
+}
+
+label {
+  color: var(--color-gray-700);
+}
+
+input {
+  border: solid 1.5px var(--color-gray-200);
+  border-radius: 4px;
+  padding: .5rem 1rem;
+}
+
+input::placeholder {
+  color: var(--color-gray-300);
+  opacity: 1; /* Firefox */
+}
