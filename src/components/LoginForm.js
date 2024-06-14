@@ -79,7 +79,7 @@ function LoginForm({ onLogin }) {
       setIsLoading(false)
       onLogin()
       navigate('/otp')
-    }, 3000)
+    }, 2500)
   }
 
   function handleInputChange(identifier, value) {
@@ -104,18 +104,20 @@ function LoginForm({ onLogin }) {
   return (
     <form onSubmit={handleSubmit}>
       {isLoading ? (
-        <span>Sending OTP number...</span>
+        <p className="text-center">Sending OTP number...</p>
       ) : (
         <>
-          <h2>Log in to the account</h2>
-          {errorMessage && <p>{errorMessage}</p>}
-          <div>
+          <h2>Login</h2>
+          <p className="form-subtitle">Enter your credentials</p>
+          <div className="py-2">
+            {errorMessage && <p className="error">{errorMessage}</p>}
             <Input
               label="Email"
               id="login-email"
               error={emailIsInvalid && 'Please enter a valid email address.'}
               type="email"
               name="email"
+              placeholder="jane.doe@email.com"
               onBlur={() => handleInputBlur('email')}
               onChange={event => handleInputChange('email', event.target.value)}
               value={enteredValues.email}
@@ -126,6 +128,7 @@ function LoginForm({ onLogin }) {
               error={passwordIsInvalid && 'Password is too short.'}
               type="password"
               name="password"
+              placeholder="password"
               onBlur={() => handleInputBlur('password')}
               onChange={event =>
                 handleInputChange('password', event.target.value)

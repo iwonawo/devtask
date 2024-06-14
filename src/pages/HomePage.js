@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import LoginForm from '../components/LoginForm'
 import RegisterForm from '../components/RegisterForm'
 
@@ -12,6 +12,7 @@ const HomePage = () => {
 
   useEffect(() => {
     const loggedInStatus = localStorage.getItem('isLoggedIn')
+
     if (loggedInStatus === 'true') {
       setIsLoggedIn(true)
     }
@@ -38,31 +39,34 @@ const HomePage = () => {
     <div>
       <h1>Welcome!</h1>
       {isRegistered ? (
-        <>
-          <div>
-            {isLoggedIn ? (
-              <p>
-                You are logged in. <button onClick={onLogout}>Log Out</button>
+        <div>
+          {isLoggedIn ? (
+            <p className="text-center">
+              You are succesfully logged in.{' '}
+              <Link className="link-color" onClick={onLogout}>
+                Log out
+              </Link>
+            </p>
+          ) : (
+            <>
+              <LoginForm onLogin={handleLogin} />
+              <p className="text-center my-4">
+                Don't have an accout?{' '}
+                <Link className="link-color" onClick={onSwitchForms}>
+                  Sign up
+                </Link>
               </p>
-            ) : (
-              <>
-                <LoginForm onLogin={handleLogin} />
-                <p>
-                  If you're not registered{' '}
-                  <button onClick={onSwitchForms}>Sign Up</button>
-                </p>
-              </>
-            )}
-          </div>
-        </>
+            </>
+          )}
+        </div>
       ) : (
         <>
-          <div>
-            <RegisterForm />
-          </div>
-          <p>
-            If you already have an account{' '}
-            <button onClick={onSwitchForms}>Sign In</button>
+          <RegisterForm />
+          <p className="text-center my-4">
+            Signed up already?{' '}
+            <Link className="link-color" onClick={onSwitchForms}>
+              Login here
+            </Link>
           </p>
         </>
       )}

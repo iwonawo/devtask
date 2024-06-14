@@ -34,17 +34,16 @@ const OtpFormPage = () => {
 
   return (
     <div>
-      <h1>OTP Form</h1>
       <form onSubmit={handleSubmit}>
-        <h2>Enter the OTP number</h2>
-
-        {errorMessage && <p>{errorMessage}</p>}
-        <div>
+        <h2>Enter OTP number</h2>
+        <div className="py-2">
+          {errorMessage && <p className="error">{errorMessage}</p>}
           <Input
-            label="Otp number"
+            label="OTP"
             id="otp-number"
             type="number"
             name="otp"
+            placeholder="321456"
             onChange={handleInputChange}
             value={enteredValue}
           />

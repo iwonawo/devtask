@@ -85,7 +85,7 @@ function RegisterForm() {
     setTimeout(() => {
       setIsLoading(false)
       navigate('/', { state: { showLogin: true } })
-    }, 3000)
+    }, 2500)
   }
 
   function handleInputChange(identifier, value) {
@@ -110,20 +110,22 @@ function RegisterForm() {
   return (
     <form onSubmit={handleSubmit}>
       {isLoading ? (
-        <span>You're account has been created! You can Log In now...</span>
+        <p className="text-center success-text">
+          You're account has been created! You can now log in...
+        </p>
       ) : (
         <>
-          <h2>Register for the account</h2>
-
-          {errorMessage && <p>{errorMessage}</p>}
-
-          <div>
+          <h2>Sign Up</h2>
+          <p className="form-subtitle">It's quick & simple</p>
+          <div className="py-2">
+            {errorMessage && <p className="error">{errorMessage}</p>}
             <Input
               label="Email"
               id="email"
               error={emailIsInvalid && 'Please enter a valid email address.'}
               type="email"
               name="email"
+              placeholder="jane.doe@email.com"
               onBlur={() => handleInputBlur('email')}
               onChange={event => handleInputChange('email', event.target.value)}
               value={enteredValues.email}
@@ -134,6 +136,7 @@ function RegisterForm() {
               error={passwordIsInvalid && 'Password is too short.'}
               type="password"
               name="password"
+              placeholder="password"
               onBlur={() => handleInputBlur('password')}
               onChange={event =>
                 handleInputChange('password', event.target.value)
@@ -146,6 +149,7 @@ function RegisterForm() {
               error={confirmPasswordIsInvalid && 'Passwords do not match.'}
               type="password"
               name="confirm-password"
+              placeholder="confirm password"
               onBlur={() => handleInputBlur('confirmPassword')}
               onChange={event =>
                 handleInputChange('confirmPassword', event.target.value)
